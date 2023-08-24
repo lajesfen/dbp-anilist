@@ -4,13 +4,16 @@ from flask import request
 app = Flask(__name__)
 
 anilist = [
-    { "id": 0, "title": "Anime 0", "score": 1.0, "type": "Serie", "season": "1", "genres": [ "Accion", "Aventura", "Pelea" ] },
-    { "id": 1, "title": "Anime 1", "score": 1.0, "type": "Serie", "season": "3", "genres": [ "Accion", "Aventura", "Pelea" ] },
-    { "id": 2, "title": "Anime 2", "score": 1.0, "type": "Serie", "season": "Final", "genres": [ "Accion", "Aventura", "Pelea" ] },
-    { "id": 3, "title": "Anime 3", "score": 1.0, "type": "Serie", "season": "5", "genres": [ "Accion", "Aventura", "Pelea" ] },
-    { "id": 4, "title": "Anime 4", "score": 1.0, "type": "Serie", "season": "GT", "genres": [ "Accion", "Aventura", "Pelea" ] },
-    { "id": 5, "title": "Anime 5", "score": 1.0, "type": "Serie", "season": "0", "genres": [ "Accion", "Aventura", "Pelea" ] },
-    { "id": 6, "title": "Anime 6", "score": 1.0, "type": "Serie", "season": "Plus", "genres": [ "Accion", "Aventura", "Pelea" ] },
+    { "id": 0, "title": "Gintama", "score": 9.1, "type": "Movie", "season": "THE FINAL", "genres": [ "action", "comedy", "drama", "sci-fi" ] },
+    { "id": 1, "title": "Gintama", "score": 9.0, "type": "TV Show", "season": "1", "genres": [ "action", "comedy", "drama", "sci-fi" ] },
+    { "id": 2, "title": "Fruits Basket", "score": 9.0, "type": "TV Show", "season": "The Final", "genres": [ "comedy", "drama", "psychological", "romance", "slice of life" ] },
+    { "id": 3, "title": "Hagane no Renkinjutsushi", "score": 9.0, "type": "TV Show", "season": "1", "genres": [ "action", "adventure", "drama", "fantasy" ] },
+    { "id": 4, "title": "Kaguya-sama wa Kokurasetai", "score": 9.0, "type": "TV Show", "season": "Ultra Romantic", "genres": [ "comedy", "psychological", "romance", "slice of life" ] },
+    { "id": 5, "title": "Shingeki no Kyojin", "score": 9.0, "type": "TV Show", "season": "3 Part 2", "genres": [ "action", "drama", "fantasy", "mystery" ] },
+    { "id": 6, "title": "3-gatsu no Lion", "score": 8.9, "type": "TV Show", "season": "2", "genres": [ "drama", "slice of life" ] },
+    { "id": 7, "title": "HUNTERxHUNTER", "score": 8.9, "type": "TV Show", "season": "2011", "genres": [ "action", "adventure", "fantasy" ] },
+    { "id": 8, "title": "Owarimonogatari", "score": 8.9, "type": "TV Show", "season": "3", "genres": [ "comedy", "mystery", "psychological", "romance", "supernatural" ] },
+    { "id": 9, "title": "Steins;Gate", "score": 8.9, "type": "TV Show", "season": "1", "genres": [ "drama", "psychological", "sci-fi", "thriller" ] }
 ]
 
 @app.route("/anime", methods = [ "GET" ])
@@ -45,10 +48,11 @@ def set_anime(id):
     for _anime in anilist:
         if _anime['id'] == id:
             anime = _anime
-
-    params = request.get_json()
-    for key, value in params.items():
-        _anime[key] = value
+    
+    if anime:
+        params = request.get_json()
+        for key, value in params.items():
+            _anime[key] = value
     return _anime
 
 @app.route("/anime/<int:id>", methods=[ "DELETE" ])
@@ -57,8 +61,9 @@ def delete_anime(id):
     for _anime in anilist:
         if _anime['id'] == id:
             anime = _anime
-
-    for _ani in anilist:
-        if anime['id'] == _ani['id']:
-            anilist.remove(_ani)
+    
+    if anime:
+        for _ani in anilist:
+            if anime['id'] == _ani['id']:
+                anilist.remove(_ani)
     return anilist
