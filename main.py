@@ -53,7 +53,7 @@ def set_anime(id):
         params = request.get_json()
         for key, value in params.items():
             _anime[key] = value
-    return _anime
+    return anime
 
 @app.route("/anime/<int:id>", methods=[ "DELETE" ])
 def delete_anime(id):
